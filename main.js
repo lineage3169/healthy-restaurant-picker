@@ -244,7 +244,7 @@ function renderDetails(r) {
     items.push(createDetailItem("👎", "缺點", r.cons));
   }
   if (r.freeShipping) {
-    items.push(createDetailItem("🚚", "免運費金額", `NT$ ${r.freeShipping}`));
+    items.push(createDetailItem("🚚", "免運", formatFreeShipping(r.freeShipping)));
   }
   if (r.note) {
     items.push(createDetailItem("📝", "備註", r.note));
@@ -268,6 +268,11 @@ function renderDetails(r) {
   } else {
     items.forEach((el) => detailsEl.appendChild(el));
   }
+}
+
+function formatFreeShipping(value) {
+  const text = String(value).trim();
+  return /^\d+$/.test(text) ? `NT$${text}` : text;
 }
 
 function createDetailItem(icon, label, value) {
@@ -320,7 +325,7 @@ function renderRestaurantList() {
 
     const hasLink = !!r.url;
     const tags = [];
-    if (r.freeShipping) tags.push(`🚚 免運 NT$${r.freeShipping}`);
+    if (r.freeShipping) tags.push(`🚚 免運 ${formatFreeShipping(r.freeShipping)}`);
     if (r.note) tags.push(`📝 ${r.note}`);
 
     const proLines = r.pros
