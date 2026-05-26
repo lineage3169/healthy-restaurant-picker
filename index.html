@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="generator" content="healthy-restaurant-picker v1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>健康餐店家隨機選擇器</title>
+    <meta
+      name="description"
+      content="公司內部健康餐店家隨機抽選工具，從 Google 試算表即時讀取店家清單，一鍵隨機選出今天吃哪家！"
+    />
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🥗</text></svg>" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+
+  <body>
+    <div class="container">
+
+      <!-- Header -->
+      <header>
+        <div class="logo-icon">🥗</div>
+        <h1>健康餐店家隨機選擇器</h1>
+        <p class="subtitle">今天吃什麼，交給命運決定！</p>
+      </header>
+
+      <!-- 錯誤提示 -->
+      <div id="error-banner" class="error-banner" role="alert">
+        <span class="error-icon">⚠️</span>
+        <span id="error-msg"></span>
+      </div>
+
+      <!-- 載入中 -->
+      <div id="loader" class="loader" aria-live="polite">
+        <div class="loader-spinner" aria-hidden="true"></div>
+        <span class="loader-text">正在讀取店家資料...</span>
+      </div>
+
+      <!-- 狀態列 -->
+      <div class="status-row">
+        <span id="status" class="status-badge status-ready">資料載入中</span>
+        <span id="count"></span>
+        <button id="reload-btn" class="reload-btn" title="重新整理資料">↺ 重新整理</button>
+      </div>
+
+      <!-- 抽選結果卡片 -->
+      <div id="result-card" class="result-card" aria-live="assertive">
+        <span class="card-label">🎯 今天吃這家</span>
+        <div id="restaurant-name" class="restaurant-name">？</div>
+        <div class="divider" aria-hidden="true"></div>
+        <div id="details" class="details"></div>
+      </div>
+
+      <!-- 主按鈕 -->
+      <button id="spin-btn" class="spin-btn" disabled aria-label="隨機選擇健康餐店家">
+        🎲 隨機選擇
+      </button>
+
+      <!-- 店家列表 -->
+      <section id="restaurant-list-section" style="display:none; width:100%;">
+        <div class="list-section-header">
+          <h2 class="list-section-title">🏪 所有店家</h2>
+          <span class="list-section-sub">點餐連結可直接點按前往外送平台</span>
+        </div>
+        <div id="restaurant-list-grid" class="restaurant-list-grid"></div>
+      </section>
+
+      <!-- Footer -->
+      <footer>
+        資料來源：
+        <a
+          href="https://docs.google.com/spreadsheets/d/1MMYTeK-OdQdDarmVRjPcOR-XpvnWZqFrP53pmDlu8KY/edit?gid=0#gid=0"
+          target="_blank"
+          rel="noopener noreferrer"
+        >Google 試算表</a>
+      </footer>
+
+    </div>
+
+    <script src="main.js"></script>
+  </body>
+</html>

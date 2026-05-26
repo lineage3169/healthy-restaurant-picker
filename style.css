@@ -1,0 +1,753 @@
+/* =============================================
+   健康餐店家隨機選擇器 - style.css
+   ============================================= */
+
+/* --- Google Fonts --- */
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600;700;900&display=swap");
+
+/* --- CSS 變數 --- */
+:root {
+  --bg: #0f1117;
+  --bg-2: #161b27;
+  --bg-card: #1c2235;
+  --bg-card-hover: #212840;
+  --border: rgba(255, 255, 255, 0.08);
+  --border-glow: rgba(99, 210, 166, 0.4);
+
+  --primary: #63d2a6;
+  --primary-dark: #45b88a;
+  --primary-glow: rgba(99, 210, 166, 0.25);
+  --accent: #f9a84d;
+  --accent-glow: rgba(249, 168, 77, 0.25);
+  --danger: #f96d6d;
+
+  --text-1: #f0f4f8;
+  --text-2: #9dafc4;
+  --text-3: #5a6e85;
+
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --radius-xl: 28px;
+
+  --shadow-card: 0 8px 40px rgba(0, 0, 0, 0.45);
+  --shadow-glow: 0 0 40px rgba(99, 210, 166, 0.2);
+}
+
+/* --- Reset --- */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: "Noto Sans TC", system-ui, -apple-system, sans-serif;
+  background-color: var(--bg);
+  color: var(--text-1);
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 16px 60px;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* --- 背景裝飾 --- */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 700px 500px at 20% 10%, rgba(99, 210, 166, 0.06) 0%, transparent 70%),
+    radial-gradient(ellipse 500px 400px at 80% 80%, rgba(249, 168, 77, 0.05) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* --- 主容器 --- */
+.container {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 600px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 28px;
+  padding-top: 48px;
+}
+
+/* --- Header --- */
+header {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo-icon {
+  font-size: 3.2rem;
+  line-height: 1;
+  filter: drop-shadow(0 0 16px rgba(99, 210, 166, 0.5));
+  animation: float 3.5s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+h1 {
+  font-size: 1.7rem;
+  font-weight: 900;
+  letter-spacing: 0.04em;
+  background: linear-gradient(135deg, var(--primary) 0%, #a8edca 50%, var(--accent) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.subtitle {
+  font-size: 0.9rem;
+  color: var(--text-3);
+  letter-spacing: 0.02em;
+}
+
+/* --- 狀態列 --- */
+.status-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  gap: 12px;
+}
+
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  border: 1px solid transparent;
+  flex: 1;
+}
+
+.status-badge::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.status-ready {
+  background: rgba(99, 210, 166, 0.12);
+  border-color: rgba(99, 210, 166, 0.25);
+  color: var(--primary);
+}
+
+.status-ready::before {
+  background: var(--primary);
+  box-shadow: 0 0 8px var(--primary);
+  animation: pulse-dot 1.8s ease-in-out infinite;
+}
+
+.status-empty {
+  background: rgba(249, 109, 109, 0.1);
+  border-color: rgba(249, 109, 109, 0.2);
+  color: var(--danger);
+}
+
+.status-empty::before {
+  background: var(--danger);
+}
+
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(0.7); }
+}
+
+#count {
+  color: var(--text-2);
+  flex: 1;
+  text-align: right;
+  font-size: 0.82rem;
+}
+
+/* --- Reload 按鈕 --- */
+.reload-btn {
+  background: none;
+  border: 1px solid var(--border);
+  color: var(--text-2);
+  padding: 8px 14px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  font-size: 0.82rem;
+  transition: all 0.2s;
+  white-space: nowrap;
+  font-family: inherit;
+}
+
+.reload-btn:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+  background: var(--primary-glow);
+}
+
+/* --- 錯誤提示 --- */
+.error-banner {
+  display: none;
+  align-items: flex-start;
+  gap: 12px;
+  background: rgba(249, 109, 109, 0.08);
+  border: 1px solid rgba(249, 109, 109, 0.25);
+  border-radius: var(--radius-md);
+  padding: 16px;
+  width: 100%;
+  font-size: 0.88rem;
+  color: #f99;
+  line-height: 1.6;
+  white-space: pre-line;
+}
+
+.error-banner .error-icon {
+  font-size: 1.2rem;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+/* --- 載入中 --- */
+.loader {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  padding: 24px;
+}
+
+.loader-spinner {
+  width: 44px;
+  height: 44px;
+  border: 3px solid var(--border);
+  border-top-color: var(--primary);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+.loader-text {
+  color: var(--text-2);
+  font-size: 0.9rem;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* --- 抽選卡片 --- */
+.result-card {
+  width: 100%;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  padding: 36px 28px 28px;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  box-shadow: var(--shadow-card);
+  transition: border-color 0.4s, box-shadow 0.4s;
+  overflow: hidden;
+  position: relative;
+}
+
+.result-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--primary), transparent);
+  opacity: 0;
+  transition: opacity 0.5s;
+}
+
+.result-card.show {
+  display: flex;
+}
+
+.result-card.result-reveal {
+  border-color: var(--border-glow);
+  box-shadow: var(--shadow-card), var(--shadow-glow);
+}
+
+.result-card.result-reveal::before {
+  opacity: 1;
+}
+
+.spinning-card {
+  border-color: rgba(249, 168, 77, 0.35) !important;
+  box-shadow: var(--shadow-card), 0 0 30px rgba(249, 168, 77, 0.15) !important;
+}
+
+/* 抽選標籤 */
+.card-label {
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: var(--text-3);
+  text-transform: uppercase;
+}
+
+.result-reveal .card-label {
+  color: var(--primary);
+}
+
+/* 店名 */
+.restaurant-name {
+  font-size: clamp(1.5rem, 5vw, 2rem);
+  font-weight: 900;
+  text-align: center;
+  letter-spacing: 0.02em;
+  color: var(--text-1);
+  line-height: 1.3;
+  min-height: 2.6em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.3s;
+}
+
+.result-reveal .restaurant-name {
+  color: var(--primary);
+  text-shadow: 0 0 24px rgba(99, 210, 166, 0.4);
+}
+
+/* 抽選中動畫 */
+.name-spin {
+  animation: name-flicker 0.12s ease-in-out infinite alternate;
+  color: var(--accent) !important;
+}
+
+@keyframes name-flicker {
+  from { opacity: 0.7; transform: scale(0.98); filter: blur(0.5px); }
+  to { opacity: 1; transform: scale(1); filter: blur(0); }
+}
+
+/* 勝利動畫 */
+@keyframes reveal-pop {
+  0% { transform: scale(0.85); opacity: 0; }
+  60% { transform: scale(1.04); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.result-reveal .restaurant-name {
+  animation: reveal-pop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+/* 分隔線 */
+.divider {
+  width: 100%;
+  height: 1px;
+  background: var(--border);
+}
+
+/* --- 詳細資訊 --- */
+.details {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.detail-item {
+  background: var(--bg-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 14px 16px;
+  animation: fade-up 0.35s ease both;
+}
+
+.detail-item:nth-child(1) { animation-delay: 0.05s; }
+.detail-item:nth-child(2) { animation-delay: 0.12s; }
+.detail-item:nth-child(3) { animation-delay: 0.19s; }
+.detail-item:nth-child(4) { animation-delay: 0.26s; }
+
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.detail-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+
+.detail-icon {
+  font-size: 1rem;
+}
+
+.detail-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: var(--text-3);
+  text-transform: uppercase;
+}
+
+.detail-value {
+  font-size: 0.92rem;
+  color: var(--text-2);
+  line-height: 1.7;
+}
+
+.detail-list {
+  margin: 0;
+  padding-left: 18px;
+}
+
+.detail-list li {
+  margin-bottom: 2px;
+}
+
+/* 點餐連結 */
+.order-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  padding: 14px;
+  background: linear-gradient(135deg, rgba(99, 210, 166, 0.12), rgba(99, 210, 166, 0.06));
+  border: 1px solid rgba(99, 210, 166, 0.3);
+  border-radius: var(--radius-md);
+  color: var(--primary);
+  text-decoration: none;
+  font-size: 0.92rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  transition: all 0.25s;
+  animation: fade-up 0.35s 0.3s ease both;
+}
+
+.order-link:hover {
+  background: linear-gradient(135deg, rgba(99, 210, 166, 0.22), rgba(99, 210, 166, 0.12));
+  border-color: var(--primary);
+  box-shadow: 0 4px 20px rgba(99, 210, 166, 0.2);
+  transform: translateY(-2px);
+}
+
+.link-arrow {
+  font-size: 0.85rem;
+  opacity: 0.7;
+}
+
+.no-details {
+  color: var(--text-3);
+  font-size: 0.88rem;
+  text-align: center;
+  padding: 8px 0;
+}
+
+/* --- 主按鈕 --- */
+.spin-btn {
+  width: 100%;
+  max-width: 340px;
+  padding: 18px 32px;
+  font-family: inherit;
+  font-size: 1.05rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  color: #0f1117;
+  background: linear-gradient(135deg, var(--primary) 0%, #a8edca 100%);
+  border: none;
+  border-radius: var(--radius-lg);
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 4px 30px rgba(99, 210, 166, 0.35);
+  transition: transform 0.2s, box-shadow 0.2s, opacity 0.2s;
+}
+
+.spin-btn::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255,255,255,0.2), transparent 60%);
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.spin-btn:hover:not(:disabled)::after {
+  opacity: 1;
+}
+
+.spin-btn:hover:not(:disabled) {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 40px rgba(99, 210, 166, 0.45);
+}
+
+.spin-btn:active:not(:disabled) {
+  transform: translateY(0);
+  box-shadow: 0 2px 16px rgba(99, 210, 166, 0.25);
+}
+
+.spin-btn.disabled,
+.spin-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.spin-btn.spinning {
+  background: linear-gradient(135deg, var(--accent) 0%, #fdc87e 100%);
+  box-shadow: 0 4px 30px rgba(249, 168, 77, 0.35);
+  animation: btn-pulse 0.7s ease-in-out infinite alternate;
+  opacity: 1;
+}
+
+@keyframes btn-pulse {
+  from { box-shadow: 0 4px 20px rgba(249, 168, 77, 0.3); }
+  to { box-shadow: 0 4px 40px rgba(249, 168, 77, 0.6); }
+}
+
+/* --- Footer --- */
+footer {
+  margin-top: 16px;
+  font-size: 0.78rem;
+  color: var(--text-3);
+  text-align: center;
+  letter-spacing: 0.03em;
+}
+
+footer a {
+  color: var(--text-3);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: color 0.2s, border-color 0.2s;
+}
+
+footer a:hover {
+  color: var(--primary);
+  border-color: var(--primary);
+}
+
+/* --- 店家列表區塊 --- */
+.list-section-header {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+.list-section-title {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: var(--text-1);
+  letter-spacing: 0.04em;
+}
+
+.list-section-sub {
+  font-size: 0.78rem;
+  color: var(--text-3);
+}
+
+.restaurant-list-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
+  gap: 12px;
+}
+
+#restaurant-list-section {
+  width: min(100vw - 32px, 1056px) !important;
+}
+
+/* 每張店家卡 */
+.list-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 18px;
+  min-height: 285px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  animation: fade-up 0.3s ease both;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.list-card:hover {
+  border-color: rgba(99, 210, 166, 0.25);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* 卡片 Header：序號 + 店名 + 點餐連結 */
+.list-card-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  min-width: 0;
+}
+
+.list-card-index {
+  flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+  background: rgba(99, 210, 166, 0.12);
+  border: 1px solid rgba(99, 210, 166, 0.25);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--primary);
+}
+
+.list-card-title-group {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.list-card-name {
+  display: block;
+  font-size: 1rem;
+  font-weight: 800;
+  color: var(--text-1);
+  line-height: 1.45;
+  overflow-wrap: anywhere;
+}
+
+.list-card-link {
+  align-self: flex-end;
+  padding: 7px 14px;
+  border-radius: 999px;
+  background: rgba(99, 210, 166, 0.1);
+  border: 1px solid rgba(99, 210, 166, 0.25);
+  color: var(--primary);
+  font-size: 0.8rem;
+  font-weight: 800;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: all 0.2s;
+}
+
+.list-card-link:hover {
+  background: rgba(99, 210, 166, 0.22);
+  border-color: var(--primary);
+  box-shadow: 0 2px 12px rgba(99, 210, 166, 0.2);
+}
+
+.list-card-footer {
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 10px;
+}
+
+/* 優點 / 缺點區塊 */
+.list-card-section {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  padding: 10px 12px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+}
+
+.list-card-section-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.list-card-section.pros .list-card-section-label {
+  color: var(--primary);
+}
+
+.list-card-section.pros {
+  background: rgba(99, 210, 166, 0.1);
+  border-color: rgba(99, 210, 166, 0.22);
+}
+
+.list-card-section.cons .list-card-section-label {
+  color: #f9a84d;
+}
+
+.list-card-section.cons {
+  background: rgba(249, 168, 77, 0.1);
+  border-color: rgba(249, 168, 77, 0.22);
+}
+
+.list-card-section ul {
+  margin: 0;
+  padding-left: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.list-card-section li {
+  font-size: 0.84rem;
+  color: var(--text-2);
+  line-height: 1.6;
+}
+
+/* 標籤（免運費金額 + 備註） */
+.list-card-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.list-card-tag {
+  font-size: 0.72rem;
+  color: #d6e1ee;
+  background: rgba(15, 17, 23, 0.42);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 6px;
+  line-height: 1.5;
+}
+
+/* --- RWD --- */
+@media (max-width: 480px) {
+  .container {
+    padding-top: 32px;
+    gap: 20px;
+  }
+
+  h1 {
+    font-size: 1.4rem;
+  }
+
+  .result-card {
+    padding: 28px 20px 22px;
+  }
+
+  .status-row {
+    flex-wrap: wrap;
+  }
+}
